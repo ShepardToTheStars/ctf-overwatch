@@ -7,7 +7,7 @@ export GREEN='\e[32m'
 export YELLOW='\e[33m'
 export BLUE='\e[34m'
 
-echo -e "${BLUE}Creating user vanessa as a super user."
+echo -e "${BLUE}Create vanessa as a super user."
 # I like ZSH as my default shell, so let's install it before we add my user. Then
 # create my user, and give me all the conviences!
 (which zsh > /dev/null 2>&1 && echo -e "${GREEN}zsh is already installed.") \
@@ -29,6 +29,19 @@ mkdir -p /home/vanessa/.ssh
     && echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGtZ42pF4hbWQVnXxMbFWuShrYJZhcb2oKLrTeC61+XC vanessa@louwagie.io" \
     >> /home/vanessa/.ssh/authorized_keys)
 
+echo -e "${BLUE}Install applications."
 
+# Need to do a work-around to install the epel yum repo
+cat > /etc/yum.repos.d/epel.repo << EOF
+[epel]
+name=Epel rebuild for armhfp
+baseurl=https://armv7.dev.centos.org/repodir/epel-pass-1/
+enabled=1
+gpgcheck=0
 
+EOF
 
+yum check-update
+yum install -y epel-release 
+yum install -y git zsh bash net-tools wireless-tools
+yum update -y
