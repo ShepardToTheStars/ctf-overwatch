@@ -29,6 +29,11 @@ mkdir -p /home/vanessa/.ssh
     && echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGtZ42pF4hbWQVnXxMbFWuShrYJZhcb2oKLrTeC61+XC vanessa@louwagie.io" \
     >> /home/vanessa/.ssh/authorized_keys)
 
+
+curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh > /tmp/ohmyzsh-install.sh
+sh /tmp/ohmyzsh-install.sh --unattended
+runuser -l vanessa -c 'sh /tmp/ohmyzsh-install.sh --unattended' 
+
 echo -e "${BLUE}Resizing Root Partition.${RESET}"
 # Easy mode! No praying to the fdisk gods for me!
 rootfs-expand
