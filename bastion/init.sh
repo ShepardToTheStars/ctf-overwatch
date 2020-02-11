@@ -7,29 +7,33 @@ export GREEN='\e[32m'
 export YELLOW='\e[33m'
 export BLUE='\e[34m'
 
-echo -e "${BLUE}Create vanessa as a super user."
+echo -e "${BLUE}Create vanessa as a super user.${RESET}"
 # I like ZSH as my default shell, so let's install it before we add my user. Then
 # create my user, and give me all the conviences!
-(which zsh > /dev/null 2>&1 && echo -e "${GREEN}zsh is already installed.") \
-    || (echo -e "${YELLOW}zsh not installed! Installing zsh..." && yum install zsh)
+(which zsh > /dev/null 2>&1 && echo -e "${GREEN}zsh is already installed.${RESET}") \
+    || (echo -e "${YELLOW}zsh not installed! Installing zsh...${RESET}" && yum install zsh)
 
 # wheel is the admin group. May need to add a check if vanessa is not in the wheel group.
-(id -u vanessa > /dev/null 2>&1 && echo -e "${GREEN}vanessa already exists.") \
-     || (echo -e "${YELLOW} Creating vanessa as an admin user..." && useradd -m -s "$(which zsh)" -g wheel vanessa)
+(id -u vanessa > /dev/null 2>&1 && echo -e "${GREEN}vanessa already exists.${RESET}") \
+     || (echo -e "${YELLOW} Creating vanessa as an admin user...${RESET}" && useradd -m -s "$(which zsh)" -g wheel vanessa)
 
 # prevents password prompt when sudo'ing
-(grep 'vanessa' /etc/sudoers > /dev/null 2>&1 && echo -e "${GREEN}vanessa exists in sudoers file already.") || \
-    (echo -e "${YELLOW} Adding vanessa to sudoers file..." && echo "vanessa ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers)
+(grep 'vanessa' /etc/sudoers > /dev/null 2>&1 && echo -e "${GREEN}vanessa exists in sudoers file already.${RESET}") || \
+    (echo -e "${YELLOW} Adding vanessa to sudoers file...${RESET}" && echo "vanessa ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers)
 
 # setup my SSH key
 mkdir -p /home/vanessa/.ssh
 (grep 'vanessa@louwagie.io' /home/vanessa/.ssh/authorized_keys > /dev/null 2>&1 \
-    && echo -e "${GREEN}SSH key for vanessa already set up.") \
-    || (echo -e "${YELLOW}Adding SSH public key for vanessa..." \
+    && echo -e "${GREEN}SSH key for vanessa already set up.${RESET}") \
+    || (echo -e "${YELLOW}Adding SSH public key for vanessa...${RESET}" \
     && echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGtZ42pF4hbWQVnXxMbFWuShrYJZhcb2oKLrTeC61+XC vanessa@louwagie.io" \
     >> /home/vanessa/.ssh/authorized_keys)
 
-echo -e "${BLUE}Install applications."
+echo -e "${BLUE}Resizing Root Partition.${RESET}"
+# Easy mode! No praying to the fdisk gods for me!
+rootfs-expand
+
+echo -e "${BLUE}Install applications.${RESET}"
 
 # Need to do a work-around to install the epel yum repo
 cat > /etc/yum.repos.d/epel.repo << EOF
@@ -45,3 +49,4 @@ yum check-update
 yum install -y epel-release 
 yum install -y git zsh bash net-tools wireless-tools
 yum update -y
+yum clean all
