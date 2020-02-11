@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # Who doesn't like colors?!
-RESET='\e[0m'
-RED='\e[31m'
-GREEN='\e[32m'
-YELLOW='\e[33m'
-BLUE='\e[34m'
+export RESET='\e[0m'
+export RED='\e[31m'
+export GREEN='\e[32m'
+export YELLOW='\e[33m'
+export BLUE='\e[34m'
 
 echo -e "${BLUE}Creating user vanessa as a super user."
 # I like ZSH as my default shell, so let's install it before we add my user. Then
