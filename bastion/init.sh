@@ -37,10 +37,6 @@ mkdir -p /home/vanessa/.ssh
     >> /home/vanessa/.ssh/authorized_keys)
 
 
-curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh > /tmp/ohmyzsh-install.sh
-sh /tmp/ohmyzsh-install.sh --unattended
-runuser -l vanessa -c 'sh /tmp/ohmyzsh-install.sh --unattended' 
-
 echo -e "${BLUE}Install applications.${RESET}"
 
 # Need to do a work-around to install the epel yum repo
@@ -58,6 +54,15 @@ yum install -y epel-release
 yum install -y git bash net-tools wireless-tools
 yum update -y
 yum clean all
+
+curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh > /tmp/ohmyzsh-install.sh
+sh /tmp/ohmyzsh-install.sh --unattended
+runuser -l vanessa -c 'sh /tmp/ohmyzsh-install.sh --unattended'
+
+chsh -s '/bin/zsh'
+
+clear
+exec /bin/zsh
 
 echo default-on > "/sys/class/leds/led0/trigger"
 echo none > "/sys/class/leds/led1/trigger"
