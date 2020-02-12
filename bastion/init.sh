@@ -15,7 +15,7 @@ echo -e "${BLUE}Create vanessa as a super user.${RESET}"
 # I like ZSH as my default shell, so let's install it before we add my user. Then
 # create my user, and give me all the conviences!
 (which zsh > /dev/null 2>&1 && echo -e "${GREEN}zsh is already installed.${RESET}") \
-    || (echo -e "${YELLOW}zsh not installed! Installing zsh...${RESET}" && yum install zsh)
+    || (echo -e "${YELLOW}zsh not installed! Installing zsh...${RESET}" && yum install -y zsh)
 
 # wheel is the admin group. May need to add a check if vanessa is not in the wheel group.
 (id -u vanessa > /dev/null 2>&1 && echo -e "${GREEN}vanessa already exists.${RESET}") \
@@ -52,6 +52,6 @@ EOF
 
 yum check-update
 yum install -y epel-release 
-yum install -y git zsh bash net-tools wireless-tools
+yum install -y git bash net-tools wireless-tools
 yum update -y
 yum clean all
