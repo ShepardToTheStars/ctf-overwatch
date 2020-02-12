@@ -7,6 +7,10 @@ export GREEN='\e[32m'
 export YELLOW='\e[33m'
 export BLUE='\e[34m'
 
+echo -e "${BLUE}Resizing Root Partition.${RESET}"
+# Easy mode! No praying to the fdisk gods for me!
+rootfs-expand
+
 echo -e "${BLUE}Create vanessa as a super user.${RESET}"
 # I like ZSH as my default shell, so let's install it before we add my user. Then
 # create my user, and give me all the conviences!
@@ -33,10 +37,6 @@ mkdir -p /home/vanessa/.ssh
 curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh > /tmp/ohmyzsh-install.sh
 sh /tmp/ohmyzsh-install.sh --unattended
 runuser -l vanessa -c 'sh /tmp/ohmyzsh-install.sh --unattended' 
-
-echo -e "${BLUE}Resizing Root Partition.${RESET}"
-# Easy mode! No praying to the fdisk gods for me!
-rootfs-expand
 
 echo -e "${BLUE}Install applications.${RESET}"
 
