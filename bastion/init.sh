@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo none > "/sys/class/leds/led0/trigger"
+echo heartbeat > "/sys/class/leds/led1/trigger"
+
 # Who doesn't like colors?!
 export RESET='\e[0m'
 export RED='\e[31m'
@@ -55,3 +58,6 @@ yum install -y epel-release
 yum install -y git bash net-tools wireless-tools
 yum update -y
 yum clean all
+
+echo default-on > "/sys/class/leds/led0/trigger"
+echo none > "/sys/class/leds/led1/trigger"
